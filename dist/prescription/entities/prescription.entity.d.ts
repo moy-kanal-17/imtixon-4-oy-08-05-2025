@@ -1,0 +1,13 @@
+import { Model } from 'sequelize-typescript';
+import { MedicalRecord } from '../../medical-records/entities/medical-record.entity';
+import { Medication } from '../../medications/entities/medication.entity';
+export declare class Prescription extends Model {
+    id: number;
+    medical_records_id: number;
+    medicalRecord: MedicalRecord;
+    medications_id: number;
+    medication: Medication;
+    name: string;
+    descriptions: string;
+    allPrice: string;
+}
