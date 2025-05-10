@@ -56,7 +56,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StaffsController.prototype, "create", null);
 __decorate([
-    (0, common_1.UseGuards)(Crreator_guard_1.CreatorGuard),
     (0, common_1.Post)("/admin"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -72,7 +71,7 @@ __decorate([
 ], StaffsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
-    (0, common_1.Get)(":id"),
+    (0, common_1.Get)("by/:id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -104,6 +103,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StaffsController.prototype, "remove", null);
 exports.StaffsController = StaffsController = __decorate([
+    (0, common_1.Controller)("staffs"),
     (0, common_1.Controller)("staffs"),
     __metadata("design:paramtypes", [staffs_service_1.StaffsService])
 ], StaffsController);

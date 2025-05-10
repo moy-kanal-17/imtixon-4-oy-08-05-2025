@@ -35,7 +35,7 @@ export class RolesController {
     type: Role,
   })
   @ApiBadRequestResponse({ description: "Invalid input data." })
-  @UseGuards(StaffGuard)
+  // @UseGuards(StaffGuard)
   @Post()
   async create(@Body() createRoleDto: CreateRoleDto): Promise<Role> {
     return this.rolesService.create(createRoleDto);

@@ -9,4 +9,5 @@ export declare class CreatePatientDto {
     birthday?: Date;
     is_active?: boolean;
     active_link?: string;
+    avatar: string;
 }

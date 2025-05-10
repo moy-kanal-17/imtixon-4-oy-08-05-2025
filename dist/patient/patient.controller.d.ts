@@ -4,9 +4,13 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 export declare class PatientController {
     private readonly patientService;
     constructor(patientService: PatientService);
-    create(createPatientDto: CreatePatientDto): Promise<import("./models/patient.models").Patient>;
+    create(createPatientDto: CreatePatientDto, avatar: any): Promise<import("./models/patient.models").Patient>;
     findAll(): Promise<import("./models/patient.models").Patient[]>;
     findOne(id: string): Promise<import("./models/patient.models").Patient>;
+    findByTime(body: {
+        startTime: Date;
+        finishTime: Date;
+    }): Promise<import("./models/patient.models").Patient[]>;
     update(id: string, updatePatientDto: UpdatePatientDto): Promise<import("./models/patient.models").Patient>;
     remove(id: string): Promise<void>;
 }

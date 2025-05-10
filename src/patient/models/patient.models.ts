@@ -34,6 +34,10 @@ export class Patient extends Model {
   @Column({ allowNull: false, type: DataType.STRING })
   declare password: string;
 
+  @ApiProperty()
+  @Column({ allowNull: false, type: DataType.STRING })
+  declare avatar: string;
+
   @ApiProperty({ required: false })
   @Column({ allowNull: true, type: DataType.STRING })
   gender?: string;
@@ -56,7 +60,7 @@ export class Patient extends Model {
 
   @ApiProperty({ required: false })
   @Column({ allowNull: true, type: DataType.STRING })
-  activation_token?: string;
+  declare active_link?: string;
 
   @HasMany(() => Appointment, { foreignKey: "Patients_id", as: "appointments" })
   appointments: Appointment[];

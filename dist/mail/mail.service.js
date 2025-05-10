@@ -19,10 +19,21 @@ let MailService = class MailService {
             pass: process.env.EMAIL_PASS,
         },
     });
-    async sendActivationLink({ email, token }) {
+    async sendActivationLink({ email, token, name }) {
         const activationLink = `http://localhost:3001/auth/activate/${token}`;
-        const subject = "Hisobingizni faollashtiring";
-        const text = `Iltimos, hisobingizni faollashtirish uchun quyidagi havolani bosing:\n\n${activationLink}`;
+        const subject = "🔐 Hisobingizni faollashtirish havolasi";
+        const text = `
+    Assalomu alaykum ${name}!
+    
+    Siz bizning tizimda ro‘yxatdan o‘tdingiz. Hisobingizni faollashtirish uchun quyidagi havolani bosing:
+    
+    👉 ${activationLink}
+    
+    Agar bu amalni siz bajarmagan bo‘lsangiz, bu xabarni e’tiborsiz qoldirishingiz mumkin.
+    
+    Hurmat bilan,  
+    Bizning jamoamiz.
+    `;
         try {
             await this.transporter.sendMail({
                 from: process.env.EMAIL_USER,

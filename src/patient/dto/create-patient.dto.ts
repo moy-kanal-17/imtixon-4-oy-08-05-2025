@@ -56,5 +56,7 @@ export class CreatePatientDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  active_link?: string;
+  declare active_link?: string;
+
+  avatar:string
 }

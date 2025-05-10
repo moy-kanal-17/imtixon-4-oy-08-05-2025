@@ -20,6 +20,7 @@ export declare class AuthService {
     }>;
     activateUser(token: string): Promise<{
         message: string;
+        type: string;
     }>;
     refreshToken(refresh_token: string, res: Response): Promise<{
         access_token: string;

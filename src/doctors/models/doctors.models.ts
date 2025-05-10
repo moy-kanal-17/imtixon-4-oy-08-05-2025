@@ -50,8 +50,8 @@ export class Doctor extends Model {
   declare birthday: Date;
 
   @ApiProperty({ default: true })
-  @Column({ defaultValue: true })
-  declare active_link: boolean;
+  @Column({ allowNull: true })
+  declare active_link: string;
 
   @ApiProperty({ required: false })
   @Column({ allowNull: true })
@@ -66,6 +66,6 @@ export class Doctor extends Model {
   declare password: string;
 
   @ApiProperty({ required: false })
-  @Column({ defaultValue: true })
+  @Column({ defaultValue: false })
   declare is_active: boolean;
 }

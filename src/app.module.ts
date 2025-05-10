@@ -19,6 +19,7 @@ import { MailModule } from './mail/mail.module';
 // import { OtpModule } from './otp/otp.module';
 import * as cookieParser from "cookie-parser";
 import { SelfOrStaffGuard } from './common/guards/Self.guard';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { SelfOrStaffGuard } from './common/guards/Self.guard';
     PrescriptionsModule,
     MedicationsModule,
     MailModule,
+    FileModule,
     // OtpModule,
   ],
   controllers: [],

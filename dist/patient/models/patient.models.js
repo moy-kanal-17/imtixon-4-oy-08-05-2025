@@ -20,7 +20,6 @@ let Patient = class Patient extends sequelize_typescript_1.Model {
     phone_number;
     hashed_token;
     birthday;
-    activation_token;
     appointments;
 };
 exports.Patient = Patient;
@@ -52,6 +51,11 @@ __decorate([
     __metadata("design:type", String)
 ], Patient.prototype, "password", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, sequelize_typescript_1.Column)({ allowNull: false, type: sequelize_typescript_1.DataType.STRING }),
+    __metadata("design:type", String)
+], Patient.prototype, "avatar", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
     (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
@@ -80,7 +84,7 @@ __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
     (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
-], Patient.prototype, "activation_token", void 0);
+], Patient.prototype, "active_link", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => appointment_model_1.Appointment, { foreignKey: "Patients_id", as: "appointments" }),
     __metadata("design:type", Array)

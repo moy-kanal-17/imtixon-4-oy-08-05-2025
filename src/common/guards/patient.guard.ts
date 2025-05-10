@@ -27,7 +27,12 @@ export class PatientGuard implements CanActivate {
       throw new UnauthorizedException("Token noto‘g‘ri yoki eskirgan");
     }
 
-      if (payload.role !== "patient" && payload.role !== "staff" && payload.role !== "admin") {
+      if (
+        payload.role !== "patient" &&
+        payload.role !== "staff" &&
+        payload.role !== "admin" &&
+        payload.role !== "creator"
+      ) {
         throw new UnauthorizedException(
           "Faqat patient yoki staff kirishi mumkin"
         );

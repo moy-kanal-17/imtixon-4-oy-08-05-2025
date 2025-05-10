@@ -31,7 +31,10 @@ let PatientGuard = class PatientGuard {
             console.log(err);
             throw new common_1.UnauthorizedException("Token noto‘g‘ri yoki eskirgan");
         }
-        if (payload.role !== "patient" && payload.role !== "staff" && payload.role !== "admin") {
+        if (payload.role !== "patient" &&
+            payload.role !== "staff" &&
+            payload.role !== "admin" &&
+            payload.role !== "creator") {
             throw new common_1.UnauthorizedException("Faqat patient yoki staff kirishi mumkin");
         }
         req["user"] = payload;

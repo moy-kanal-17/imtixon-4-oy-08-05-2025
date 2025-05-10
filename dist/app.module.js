@@ -26,6 +26,7 @@ const prescription_module_1 = require("./prescription/prescription.module");
 const auth_module_1 = require("./auth/auth.module");
 const mail_module_1 = require("./mail/mail.module");
 const cookieParser = require("cookie-parser");
+const file_module_1 = require("./file/file.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(cookieParser()).forRoutes('*');
@@ -61,6 +62,7 @@ exports.AppModule = AppModule = __decorate([
             prescription_module_1.PrescriptionsModule,
             medications_module_1.MedicationsModule,
             mail_module_1.MailModule,
+            file_module_1.FileModule,
         ],
         controllers: [],
         providers: [],

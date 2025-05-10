@@ -9,7 +9,7 @@ export declare class Doctor extends Model {
     hashed_token: string;
     phone_number: string;
     birthday: Date;
-    active_link: boolean;
+    active_link: string;
     gender: string;
     email: string;
     password: string;

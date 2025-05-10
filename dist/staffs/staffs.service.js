@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const staff_model_1 = require("./models/staff.model");
 const role_model_1 = require("../role/models/role.model");
+const bcrypt = require("bcrypt");
 let StaffsService = class StaffsService {
     staffModel;
     constructor(staffModel) {
@@ -24,6 +25,9 @@ let StaffsService = class StaffsService {
     }
     async create(createStaffDto) {
         try {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(createStaffDto.password, saltRounds);
+            createStaffDto.password = hashedPassword;
             return this.staffModel.create(createStaffDto);
         }
         catch (error) {
@@ -32,10 +36,13 @@ let StaffsService = class StaffsService {
         }
     }
     async createAdmin(createStaffDto) {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(createStaffDto.password, saltRounds);
         try {
             const staffData = {
                 ...createStaffDto,
                 IsCreator: true,
+                password: hashedPassword
             };
             const newStaff = await this.staffModel.create(staffData);
             return newStaff;

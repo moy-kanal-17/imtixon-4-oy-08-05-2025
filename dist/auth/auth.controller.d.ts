@@ -12,6 +12,7 @@ export declare class AuthController {
     }>;
     activate(token: string): Promise<{
         message: string;
+        type: string;
     }>;
     refreshToken(req: Request, res: Response): Promise<{
         access_token: string;

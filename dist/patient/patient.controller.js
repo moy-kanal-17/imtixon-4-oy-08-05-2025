@@ -19,19 +19,24 @@ const create_patient_dto_1 = require("./dto/create-patient.dto");
 const update_patient_dto_1 = require("./dto/update-patient.dto");
 const admin_guard_1 = require("../common/guards/admin.guard");
 const Self_guard_1 = require("../common/guards/Self.guard");
+const platform_express_1 = require("@nestjs/platform-express");
 let PatientController = class PatientController {
     patientService;
     constructor(patientService) {
         this.patientService = patientService;
     }
-    create(createPatientDto) {
-        return this.patientService.create(createPatientDto);
+    create(createPatientDto, avatar) {
+        return this.patientService.create(createPatientDto, avatar);
     }
     findAll() {
         return this.patientService.findAll();
     }
     findOne(id) {
         return this.patientService.findOne(+id);
+    }
+    findByTime(body) {
+        const { startTime, finishTime } = body;
+        return this.patientService.getPatientsWithinTimeRange(startTime, finishTime);
     }
     update(id, updatePatientDto) {
         return this.patientService.update(+id, updatePatientDto);
@@ -43,9 +48,11 @@ let PatientController = class PatientController {
 exports.PatientController = PatientController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("avatar")),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_patient_dto_1.CreatePatientDto]),
+    __metadata("design:paramtypes", [create_patient_dto_1.CreatePatientDto, Object]),
     __metadata("design:returntype", void 0)
 ], PatientController.prototype, "create", null);
 __decorate([
@@ -63,6 +70,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PatientController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.Get)("spe/3"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], PatientController.prototype, "findByTime", null);
 __decorate([
     (0, common_1.UseGuards)(Self_guard_1.SelfOrStaffGuard),
     (0, common_1.Patch)(":id"),

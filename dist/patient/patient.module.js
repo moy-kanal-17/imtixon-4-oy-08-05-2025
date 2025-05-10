@@ -12,12 +12,13 @@ const patient_service_1 = require("./patient.service");
 const patient_controller_1 = require("./patient.controller");
 const patient_models_1 = require("./models/patient.models");
 const sequelize_1 = require("@nestjs/sequelize");
+const file_module_1 = require("../file/file.module");
 let PatientModule = class PatientModule {
 };
 exports.PatientModule = PatientModule;
 exports.PatientModule = PatientModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([patient_models_1.Patient])],
+        imports: [sequelize_1.SequelizeModule.forFeature([patient_models_1.Patient]), file_module_1.FileModule],
         controllers: [patient_controller_1.PatientController],
         providers: [patient_service_1.PatientService],
     })

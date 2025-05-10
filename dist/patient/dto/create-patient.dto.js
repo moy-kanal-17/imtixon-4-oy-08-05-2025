@@ -19,7 +19,7 @@ class CreatePatientDto {
     phone_number;
     birthday;
     is_active;
-    active_link;
+    avatar;
 }
 exports.CreatePatientDto = CreatePatientDto;
 __decorate([

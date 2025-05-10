@@ -63,8 +63,8 @@ __decorate([
 ], Doctor.prototype, "birthday", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ default: true }),
-    (0, sequelize_typescript_1.Column)({ defaultValue: true }),
-    __metadata("design:type", Boolean)
+    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    __metadata("design:type", String)
 ], Doctor.prototype, "active_link", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
@@ -83,7 +83,7 @@ __decorate([
 ], Doctor.prototype, "password", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ defaultValue: true }),
+    (0, sequelize_typescript_1.Column)({ defaultValue: false }),
     __metadata("design:type", Boolean)
 ], Doctor.prototype, "is_active", void 0);
 exports.Doctor = Doctor = __decorate([

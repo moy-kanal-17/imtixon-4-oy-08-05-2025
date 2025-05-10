@@ -4,6 +4,7 @@ import { Staff } from './models/staff.model';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
 import { Role } from 'src/role/models/role.model';
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class StaffsService {
@@ -12,8 +13,12 @@ export class StaffsService {
     private staffModel: typeof Staff
   ) {}
 
-  async create(createStaffDto: CreateStaffDto): Promise<Staff> {
+  async create(createStaffDto: CreateStaffDto){
     try {
+          const saltRounds = 10; 
+          const hashedPassword = await bcrypt.hash(createStaffDto.password!,saltRounds);
+          createStaffDto.password = hashedPassword;
+
       return this.staffModel.create(createStaffDto as Partial<Staff>);
     } catch (error) {
       console.log(error);
@@ -21,12 +26,22 @@ export class StaffsService {
     }
   }
 
-  async createAdmin(createStaffDto: CreateStaffDto): Promise<Staff> {
+  async createAdmin(createStaffDto: CreateStaffDto){
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(
+      createStaffDto.password!,
+      saltRounds
+    );
     try {
       const staffData = {
+        
         ...createStaffDto,
         IsCreator: true,
+      password:hashedPassword
+
       };
+
+
 
       const newStaff = await this.staffModel.create(staffData);
 

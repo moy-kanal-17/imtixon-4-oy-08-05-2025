@@ -4,21 +4,52 @@ import { Patient } from './models/patient.models';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { Appointment } from '../appointments/models/appointment.model';
-
+import { FileService } from 'src/file/file.service';
+import * as bcrypt from "bcrypt";
+import { Op } from 'sequelize';
 @Injectable()
 export class PatientService {
   constructor(
     @InjectModel(Patient)
     private patientModel: typeof Patient,
+    private fileservice: FileService
   ) {}
-  
 
-  async create(createPatientDto: CreatePatientDto): Promise<Patient> {
-    const re= await this.patientModel.findByPk(createPatientDto.email)
-    if(re){
-      throw new NotFoundException("BU YUSER BOR!")
+  async create(createPatientDto: CreatePatientDto, avatar: any) {
+    const re = await this.patientModel.findOne({
+      where: { email: createPatientDto.email },
+    });
+    if (re) {
+      throw new NotFoundException("BU YUSER BOR!");
     }
-    return this.patientModel.create(createPatientDto as Partial<Patient>);
+    const fileName = await this.fileservice.saveImage(avatar.buffer);
+    console.log(fileName);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(
+      createPatientDto.password!,
+      saltRounds
+    );
+    createPatientDto.password = hashedPassword;
+    return this.patientModel.create({ ...createPatientDto, avatar: fileName });
+  }
+
+  async getPatientsWithinTimeRange(
+    startTime: Date,
+    finishTime: Date
+  ): Promise<Patient[]> {
+    try {
+      const patients = await this.patientModel.findAll({
+        where: {
+          createdAt: {
+            [Op.between]: [new Date(startTime), new Date(finishTime)],
+          },
+          is_active: true,
+      }});
+      return patients;
+    } catch (error) {
+      console.error("Bemorlarni vaqt oralig'ida olishda xatolik:", error);
+      throw new Error("Bemorlarni olishda xatolik yuz berdi");
+    }
   }
 
   async findAll(): Promise<Patient[]> {
@@ -26,7 +57,7 @@ export class PatientService {
       include: [
         {
           model: Appointment,
-          as: 'appointments',
+          as: "appointments",
         },
       ],
     });
@@ -37,7 +68,7 @@ export class PatientService {
       include: [
         {
           model: Appointment,
-          as: 'appointments',
+          as: "appointments",
         },
       ],
     });
@@ -49,7 +80,7 @@ export class PatientService {
 
   async update(
     id: number,
-    updatePatientDto: UpdatePatientDto,
+    updatePatientDto: UpdatePatientDto
   ): Promise<Patient> {
     const [affectedCount] = await this.patientModel.update(updatePatientDto, {
       where: { id },

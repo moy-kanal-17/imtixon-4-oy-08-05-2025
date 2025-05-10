@@ -6,11 +6,12 @@ export declare class Patient extends Model {
     last_name: string;
     email: string;
     password: string;
+    avatar: string;
     gender?: string;
     phone_number: string;
     hashed_token?: string;
     birthday?: Date;
     is_active: boolean;
-    activation_token?: string;
+    active_link?: string;
     appointments: Appointment[];
 }

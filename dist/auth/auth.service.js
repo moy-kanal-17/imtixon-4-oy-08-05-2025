@@ -55,6 +55,13 @@ let AuthService = class AuthService {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         if (role === "patient") {
+            const token = (0, crypto_1.randomUUID)();
+            await user.update({ active_link: token });
+            await this.mailService.sendActivationLink({
+                email: user.email,
+                token,
+                name: user.full_name || "foydalanuvchi",
+            });
             return this.patientModel.create({
                 email,
                 password: hashedPassword,
@@ -62,11 +69,19 @@ let AuthService = class AuthService {
             });
         }
         else if (role === "doctor") {
-            return this.doctorModel.create({
+            const token = (0, crypto_1.randomUUID)();
+            const newUser = await this.doctorModel.create({
                 email,
                 password: hashedPassword,
+                active_link: token,
                 ...rest,
             });
+            await this.mailService.sendActivationLink({
+                email: newUser.email,
+                token,
+                name: newUser.first_name || "foydalanuvchi",
+            });
+            return newUser;
         }
         else if (role === "staff" || role === "admin") {
             return this.staffModel.create({
@@ -90,12 +105,16 @@ let AuthService = class AuthService {
         let user;
         if (role == "patient") {
             user = await this.patientModel.findOne({ where: { email } });
+            if (!user.is_active) {
+                console.log("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
+                throw new common_1.NotFoundException("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
+            }
         }
         else if (role == "doctor") {
             user = await this.doctorModel.findOne({ where: { email } });
         }
         else if (role == "staff" || role == "admin" || role == "creator") {
-            console.log(email);
+            console.log(email, password);
             user = await this.staffModel.findOne({ where: { email } });
         }
         if (!user || !user.password) {
@@ -131,20 +150,35 @@ let AuthService = class AuthService {
         await user.update({ hashed_token: hashedToken });
         console.log(`${user.email} 💀💀`);
         const token = (0, crypto_1.randomUUID)();
-        await user.update({ activation_token: token });
-        await this.mailService.sendActivationLink({ email: user.email, token });
+        await user.update({ active_link: token });
+        await this.mailService.sendActivationLink({
+            email: user.email,
+            token,
+            name: user.full_name || "foydalanuvchi",
+        });
         return { access_token };
     }
     async activateUser(token) {
-        const user = await this.patientModel.findOne({
-            where: { activation_token: token },
+        let user = await this.patientModel.findOne({
+            where: { active_link: token },
         });
-        if (!user)
+        let userType = "patient";
+        if (!user) {
+            user = await this.doctorModel.findOne({
+                where: { active_link: token },
+            });
+            userType = "doctor";
+        }
+        if (!user) {
             throw new common_1.NotFoundException("Token noto‘g‘ri yoki foydalanuvchi topilmadi");
+        }
         user.is_active = true;
-        user.activation_token = "null";
+        user.active_link = "null";
         await user.save();
-        return { message: "Hisob muvaffaqiyatli faollashtirildi!" };
+        return {
+            message: "Hisob muvaffaqiyatli faollashtirildi!",
+            type: userType,
+        };
     }
     async refreshToken(refresh_token, res) {
         try {

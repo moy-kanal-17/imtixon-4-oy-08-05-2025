@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";import * as nodemailer from "nodemailer";import * as dotenv from "dotenv";import { randomUUID } from "crypto";
-
 dotenv.config();
 
 @Injectable()
@@ -12,13 +11,26 @@ export class MailService {
     },
   });
 
-  async sendActivationLink({ email, token }: { email: string; token: string }) {
+  async sendActivationLink({ email, token ,name}: { email: string; token: string;name:string }) {
     const activationLink = `http://localhost:3001/auth/activate/${token}`;
     // console.log(process.env);
     
 
-    const subject = "Hisobingizni faollashtiring";
-    const text = `Iltimos, hisobingizni faollashtirish uchun quyidagi havolani bosing:\n\n${activationLink}`;
+    const subject = "🔐 Hisobingizni faollashtirish havolasi";
+
+    const text = `
+    Assalomu alaykum ${name}!
+    
+    Siz bizning tizimda ro‘yxatdan o‘tdingiz. Hisobingizni faollashtirish uchun quyidagi havolani bosing:
+    
+    👉 ${activationLink}
+    
+    Agar bu amalni siz bajarmagan bo‘lsangiz, bu xabarni e’tiborsiz qoldirishingiz mumkin.
+    
+    Hurmat bilan,  
+    Bizning jamoamiz.
+    `;
+    
 
     try {
       await this.transporter.sendMail({

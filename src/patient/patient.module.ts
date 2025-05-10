@@ -4,9 +4,10 @@ import { PatientController } from './patient.controller';
 import { Patient } from './models/patient.models';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { StaffsModule } from 'src/staffs/staffs.module';
+import { FileModule } from 'src/file/file.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Patient])],
+  imports: [SequelizeModule.forFeature([Patient]),FileModule],
   controllers: [PatientController],
   providers: [PatientService],
 })

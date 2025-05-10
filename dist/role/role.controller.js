@@ -49,7 +49,6 @@ __decorate([
         type: role_model_1.Role,
     }),
     (0, swagger_1.ApiBadRequestResponse)({ description: "Invalid input data." }),
-    (0, common_1.UseGuards)(staffs_guard_1.StaffGuard),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
