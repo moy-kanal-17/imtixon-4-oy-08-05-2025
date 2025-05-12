@@ -1,20 +1,20 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { Medication } from './entities/medication.entity';
-import { CreateMedicationDto } from './dto/create-medication.dto';
-import { UpdateMedicationDto } from './dto/update-medication.dto';
-import { Prescription } from 'src/prescription/entities/prescription.entity';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { Medication } from "./models/medication.entity";
+import { CreateMedicationDto } from "./dto/create-medication.dto";
+import { UpdateMedicationDto } from "./dto/update-medication.dto";
+import { Prescription } from "src/prescription/models/prescription.entity";
 
 @Injectable()
 export class MedicationsService {
   constructor(
     @InjectModel(Medication)
-    private medicationModel: typeof Medication,
+    private medicationModel: typeof Medication
   ) {}
 
   async create(createMedicationDto: CreateMedicationDto): Promise<Medication> {
     return this.medicationModel.create(
-      createMedicationDto as Partial<Medication>,
+      createMedicationDto as Partial<Medication>
     );
   }
 
@@ -24,7 +24,7 @@ export class MedicationsService {
 
   async findOne(id: number): Promise<Medication> {
     const medication = await this.medicationModel.findByPk(id, {
-      include: [{ model: Prescription, as: 'prescriptions' }],
+      include: [{ model: Prescription, as: "prescriptions" }],
     });
     if (!medication) {
       throw new NotFoundException(`Medication with ID ${id} not found`);
@@ -34,14 +34,14 @@ export class MedicationsService {
 
   async update(
     id: number,
-    updateMedicationDto: UpdateMedicationDto,
+    updateMedicationDto: UpdateMedicationDto
   ): Promise<Medication> {
     const [affectedCount] = await this.medicationModel.update(
       updateMedicationDto,
       {
         where: { id },
         returning: true,
-      },
+      }
     );
 
     if (affectedCount === 0) {

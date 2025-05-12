@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const medical_records_service_1 = require("./medical-records.service");
 const medical_records_controller_1 = require("./medical-records.controller");
 const sequelize_1 = require("@nestjs/sequelize");
-const medical_record_entity_1 = require("./entities/medical-record.entity");
+const medical_record_entity_1 = require("./models/medical-record.entity");
 let MedicalRecordsModule = class MedicalRecordsModule {
 };
 exports.MedicalRecordsModule = MedicalRecordsModule;

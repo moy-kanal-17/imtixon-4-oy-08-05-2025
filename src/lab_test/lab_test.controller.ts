@@ -9,7 +9,7 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -17,14 +17,14 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiParam,
-} from '@nestjs/swagger';
-import { LabTestsService } from './lab_test.service';
-import { LabTest } from './entities/lab_test.entity';
-import { CreateLabTestDto } from './dto/create-lab_test.dto';
-import { UpdateLabTestDto } from './dto/update-lab_test.dto';
-import { SelfOrStaffGuard } from 'src/common/guards/Self.guard';
-import { AdminGuard } from 'src/common/guards/admin.guard';
-import { DoctorsGuard } from 'src/common/guards/doctors.guard';
+} from "@nestjs/swagger";
+import { LabTestsService } from "./lab_test.service";
+import { LabTest } from "./models/lab_test.entity";
+import { CreateLabTestDto } from "./dto/create-lab_test.dto";
+import { UpdateLabTestDto } from "./dto/update-lab_test.dto";
+import { SelfOrStaffGuard } from "src/common/guards/Self.guard";
+import { AdminGuard } from "src/common/guards/admin.guard";
+import { DoctorsGuard } from "src/common/guards/doctors.guard";
 
 @ApiTags("Lab Tests")
 @Controller("lab-tests")

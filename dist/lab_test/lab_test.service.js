@@ -16,7 +16,7 @@ exports.LabTestsService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const patient_models_1 = require("../patient/models/patient.models");
-const lab_test_entity_1 = require("./entities/lab_test.entity");
+const lab_test_entity_1 = require("./models/lab_test.entity");
 let LabTestsService = class LabTestsService {
     labTestModel;
     constructor(labTestModel) {
@@ -30,15 +30,15 @@ let LabTestsService = class LabTestsService {
             include: [
                 {
                     model: patient_models_1.Patient,
-                    as: 'patient',
-                    attributes: ['first_name', 'last_name'],
+                    as: "patient",
+                    attributes: ["first_name", "last_name"],
                 },
             ],
         });
     }
     async findOne(id) {
         const labTest = await this.labTestModel.findByPk(id, {
-            include: [{ model: patient_models_1.Patient, as: 'patient' }],
+            include: [{ model: patient_models_1.Patient, as: "patient" }],
         });
         if (!labTest) {
             throw new common_1.NotFoundException(`Lab test with ID ${id} not found`);

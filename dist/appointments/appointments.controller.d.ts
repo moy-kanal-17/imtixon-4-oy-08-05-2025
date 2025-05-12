@@ -7,6 +7,7 @@ export declare class AppointmentsController {
     create(createAppointmentDto: CreateAppointmentDto): Promise<import("./models/appointment.model").Appointment>;
     findAll(): Promise<import("./models/appointment.model").Appointment[]>;
     findOne(id: string): Promise<import("./models/appointment.model").Appointment>;
+    findPatient(id: string): Promise<import("./models/appointment.model").Appointment[]>;
     update(id: string, updateAppointmentDto: UpdateAppointmentDto): Promise<import("./models/appointment.model").Appointment>;
     remove(id: string): Promise<void>;
 }

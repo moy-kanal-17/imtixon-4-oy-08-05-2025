@@ -9,7 +9,7 @@ export class StaffsController {
     return this.staffsService.create(createStaffDto);
   }
 
-  // @UseGuards(CreatorGuard)
+  @UseGuards(CreatorGuard)
   @Post("/admin")
   createAdmin(@Body() createStaffDto: CreateStaffDto) {
     return this.staffsService.createAdmin(createStaffDto);

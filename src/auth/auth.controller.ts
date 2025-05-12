@@ -14,15 +14,15 @@ import { Request, Response } from "express";
 import { CreatePatientDto } from "src/patient/dto/create-patient.dto";
 import { CreateDoctorDto } from "src/doctors/dto/create-doctor.dto";
 import { CreateStaffDto } from "src/staffs/dto/create-staff.dto";
+import { ApiBody, ApiParam } from "@nestjs/swagger";
+import { LoginAuthDto } from "./dto/login-auth.dto";
 
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post("register")
-  async register(
-    @Body() body: CreatePatientDto | CreateDoctorDto | CreateStaffDto
-  ) {
+  async register(@Body() body: CreatePatientDto) {
     const { role } = body as any;
 
     if (!role) {
@@ -33,10 +33,8 @@ export class AuthController {
   }
 
   @Post("login")
-  async login(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
-  ): Promise<{ access_token: string }> {
+  @ApiBody({ type: LoginAuthDto })
+  async login(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const { email, password, role } = req.body;
     if (!email || !password || !role) {
       throw new UnauthorizedException(

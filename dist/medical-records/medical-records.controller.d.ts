@@ -1,7 +1,7 @@
-import { MedicalRecordsService } from './medical-records.service';
-import { CreateMedicalRecordDto } from './dto/create-medical-record.dto';
-import { UpdateMedicalRecordDto } from './dto/update-medical-record.dto';
-import { MedicalRecord } from './entities/medical-record.entity';
+import { MedicalRecordsService } from "./medical-records.service";
+import { CreateMedicalRecordDto } from "./dto/create-medical-record.dto";
+import { UpdateMedicalRecordDto } from "./dto/update-medical-record.dto";
+import { MedicalRecord } from "./models/medical-record.entity";
 export declare class MedicalRecordsController {
     private readonly medicalRecordsService;
     constructor(medicalRecordsService: MedicalRecordsService);

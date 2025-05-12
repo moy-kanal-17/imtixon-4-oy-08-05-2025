@@ -33,7 +33,7 @@ export class PatientService {
     return this.patientModel.create({ ...createPatientDto, avatar: fileName });
   }
 
-  async getPatientsWithinTimeRange(
+  async findtime(
     startTime: Date,
     finishTime: Date
   ): Promise<Patient[]> {

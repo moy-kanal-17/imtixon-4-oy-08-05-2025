@@ -33,7 +33,7 @@ __decorate([
 ], Role.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Role.prototype, "descriptions", void 0);
 __decorate([

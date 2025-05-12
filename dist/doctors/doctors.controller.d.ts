@@ -10,5 +10,9 @@ export declare class DoctorsController {
     findOne(id: string): Promise<Doctor>;
     update(id: string, updateDoctorDto: UpdateDoctorDto): Promise<Doctor>;
     findbyspec(id: string): Promise<Doctor[]>;
+    findByTime(body: {
+        startTime: Date;
+        finishTime: Date;
+    }): Promise<Doctor[]>;
     remove(id: string): Promise<void>;
 }

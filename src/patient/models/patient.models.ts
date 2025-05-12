@@ -35,11 +35,11 @@ export class Patient extends Model {
   declare password: string;
 
   @ApiProperty()
-  @Column({ allowNull: false, type: DataType.STRING })
+  @Column({ allowNull: true, type: DataType.STRING })
   declare avatar: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true, type: DataType.STRING })
+  @Column({ allowNull: false, type: DataType.STRING })
   gender?: string;
 
   @ApiProperty()
@@ -59,7 +59,7 @@ export class Patient extends Model {
   declare is_active: boolean;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true, type: DataType.STRING })
+  @Column({  type: DataType.STRING })
   declare active_link?: string;
 
   @HasMany(() => Appointment, { foreignKey: "Patients_id", as: "appointments" })

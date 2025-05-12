@@ -56,6 +56,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], StaffsController.prototype, "create", null);
 __decorate([
+    (0, common_1.UseGuards)(Crreator_guard_1.CreatorGuard),
     (0, common_1.Post)("/admin"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

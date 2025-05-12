@@ -5,6 +5,7 @@ import {
   IsPhoneNumber,
   IsDate,
   IsBoolean,
+  IsEmail,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -12,17 +13,17 @@ export class CreatePatientDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  first_name: string;
+  declare first_name: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  last_name: string;
+  declare last_name: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  @ApiProperty({example:"email patient",description:"patientni emaili"})
+  @IsEmail()
   declare email: string;
+  
 
   @ApiProperty()
   @IsOptional()

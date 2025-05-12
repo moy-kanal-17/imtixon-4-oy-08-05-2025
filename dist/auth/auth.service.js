@@ -38,43 +38,19 @@ let AuthService = class AuthService {
     async register(registerDto, role) {
         const { email, password, ...rest } = registerDto;
         let user;
+        console.log(registerDto);
         if (role === "patient") {
-            user = await this.patientModel.findOne({ where: { email } });
-        }
-        else if (role === "doctor") {
-            user = await this.doctorModel.findOne({ where: { email } });
-        }
-        else if (role === "staff" || role === "admin" || role === "creator") {
-            user = await this.staffModel.findOne({ where: { email } });
-        }
-        else {
-            throw new common_1.BadRequestException("Noto'g'ri rol kiritildi");
-        }
-        if (user) {
-            throw new common_1.BadRequestException("Bu email allaqachon ro'yxatdan o'tgan");
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        if (role === "patient") {
+            const existing = await this.patientModel.findOne({ where: { email } });
+            if (existing) {
+                throw new common_1.BadRequestException("Bu email allaqachon ro'yxatdan o'tgan");
+            }
+            const hashedPassword = await bcrypt.hash(password, 10);
             const token = (0, crypto_1.randomUUID)();
-            await user.update({ active_link: token });
-            await this.mailService.sendActivationLink({
-                email: user.email,
-                token,
-                name: user.full_name || "foydalanuvchi",
-            });
-            return this.patientModel.create({
-                email,
-                password: hashedPassword,
+            const newUser = await this.patientModel.create({
                 ...rest,
-            });
-        }
-        else if (role === "doctor") {
-            const token = (0, crypto_1.randomUUID)();
-            const newUser = await this.doctorModel.create({
                 email,
                 password: hashedPassword,
                 active_link: token,
-                ...rest,
             });
             await this.mailService.sendActivationLink({
                 email: newUser.email,
@@ -83,30 +59,20 @@ let AuthService = class AuthService {
             });
             return newUser;
         }
-        else if (role === "staff" || role === "admin") {
-            return this.staffModel.create({
-                email,
-                password: hashedPassword,
-                ...rest,
-                roles_id: registerDto.roles_id,
-            });
-        }
-        else if (role === "creator") {
-            return this.staffModel.create({
-                email,
-                password: hashedPassword,
-                ...rest,
-                roles_id: registerDto.roles_id,
-            });
-        }
-        return null;
     }
     async login(email, password, role, res) {
         let user;
         if (role == "patient") {
             user = await this.patientModel.findOne({ where: { email } });
             if (!user.is_active) {
+                const token = (0, crypto_1.randomUUID)();
                 console.log("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
+                user.update({ active_link: token });
+                await this.mailService.sendActivationLink({
+                    email: user.email,
+                    token: token,
+                    name: user.first_name || "foydalanuvchi",
+                });
                 throw new common_1.NotFoundException("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
             }
         }
@@ -148,14 +114,6 @@ let AuthService = class AuthService {
         });
         const hashedToken = await bcrypt.hash(refresh_token, 10);
         await user.update({ hashed_token: hashedToken });
-        console.log(`${user.email} 💀💀`);
-        const token = (0, crypto_1.randomUUID)();
-        await user.update({ active_link: token });
-        await this.mailService.sendActivationLink({
-            email: user.email,
-            token,
-            name: user.full_name || "foydalanuvchi",
-        });
         return { access_token };
     }
     async activateUser(token) {
@@ -199,7 +157,6 @@ let AuthService = class AuthService {
             else if (payload.role === "staff" ||
                 payload.role === "admin" ||
                 payload.role === "creator") {
-                console.log("creator 🥰👨‍💻👨‍💻");
                 user = await this.staffModel.findByPk(payload.sub);
             }
             const new_payload = {

@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const medications_service_1 = require("./medications.service");
 const medications_controller_1 = require("./medications.controller");
 const sequelize_1 = require("@nestjs/sequelize");
-const medication_entity_1 = require("./entities/medication.entity");
+const medication_entity_1 = require("./models/medication.entity");
 let MedicationsModule = class MedicationsModule {
 };
 exports.MedicationsModule = MedicationsModule;

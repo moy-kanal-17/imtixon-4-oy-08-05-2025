@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicalRecordsService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const medical_record_entity_1 = require("./entities/medical-record.entity");
+const medical_record_entity_1 = require("./models/medical-record.entity");
 const doctors_models_1 = require("../doctors/models/doctors.models");
 const patient_models_1 = require("../patient/models/patient.models");
 let MedicalRecordsService = class MedicalRecordsService {
@@ -31,13 +31,13 @@ let MedicalRecordsService = class MedicalRecordsService {
             include: [
                 {
                     model: doctors_models_1.Doctor,
-                    as: 'doctor',
-                    attributes: ['first_name', 'last_name'],
+                    as: "doctor",
+                    attributes: ["first_name", "last_name"],
                 },
                 {
                     model: patient_models_1.Patient,
-                    as: 'patient',
-                    attributes: ['first_name', 'last_name'],
+                    as: "patient",
+                    attributes: ["first_name", "last_name"],
                 },
             ],
         });
@@ -45,8 +45,8 @@ let MedicalRecordsService = class MedicalRecordsService {
     async findOne(id) {
         const medicalRecord = await this.medicalRecordModel.findByPk(id, {
             include: [
-                { model: doctors_models_1.Doctor, as: 'doctor' },
-                { model: patient_models_1.Patient, as: 'patient' },
+                { model: doctors_models_1.Doctor, as: "doctor" },
+                { model: patient_models_1.Patient, as: "patient" },
             ],
         });
         if (!medicalRecord) {

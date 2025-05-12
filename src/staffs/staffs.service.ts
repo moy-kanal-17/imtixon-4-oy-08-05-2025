@@ -18,7 +18,6 @@ export class StaffsService {
           const saltRounds = 10; 
           const hashedPassword = await bcrypt.hash(createStaffDto.password!,saltRounds);
           createStaffDto.password = hashedPassword;
-
       return this.staffModel.create(createStaffDto as Partial<Staff>);
     } catch (error) {
       console.log(error);

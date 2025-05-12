@@ -1,23 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { MedicalRecord } from './entities/medical-record.entity';
-import { CreateMedicalRecordDto } from './dto/create-medical-record.dto';
-import { UpdateMedicalRecordDto } from './dto/update-medical-record.dto';
-import { Doctor } from 'src/doctors/models/doctors.models';
-import { Patient } from 'src/patient/models/patient.models';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { MedicalRecord } from "./models/medical-record.entity";
+import { CreateMedicalRecordDto } from "./dto/create-medical-record.dto";
+import { UpdateMedicalRecordDto } from "./dto/update-medical-record.dto";
+import { Doctor } from "src/doctors/models/doctors.models";
+import { Patient } from "src/patient/models/patient.models";
 
 @Injectable()
 export class MedicalRecordsService {
   constructor(
     @InjectModel(MedicalRecord)
-    private medicalRecordModel: typeof MedicalRecord,
+    private medicalRecordModel: typeof MedicalRecord
   ) {}
 
   async create(
-    createMedicalRecordDto: CreateMedicalRecordDto,
+    createMedicalRecordDto: CreateMedicalRecordDto
   ): Promise<MedicalRecord> {
     return this.medicalRecordModel.create(
-      createMedicalRecordDto as Partial<MedicalRecord>,
+      createMedicalRecordDto as Partial<MedicalRecord>
     );
   }
 
@@ -26,13 +26,13 @@ export class MedicalRecordsService {
       include: [
         {
           model: Doctor,
-          as: 'doctor',
-          attributes: ['first_name', 'last_name'],
+          as: "doctor",
+          attributes: ["first_name", "last_name"],
         },
         {
           model: Patient,
-          as: 'patient',
-          attributes: ['first_name', 'last_name'],
+          as: "patient",
+          attributes: ["first_name", "last_name"],
         },
       ],
     });
@@ -41,8 +41,8 @@ export class MedicalRecordsService {
   async findOne(id: number): Promise<MedicalRecord> {
     const medicalRecord = await this.medicalRecordModel.findByPk(id, {
       include: [
-        { model: Doctor, as: 'doctor' },
-        { model: Patient, as: 'patient' },
+        { model: Doctor, as: "doctor" },
+        { model: Patient, as: "patient" },
       ],
     });
     if (!medicalRecord) {
@@ -53,14 +53,14 @@ export class MedicalRecordsService {
 
   async update(
     id: number,
-    updateMedicalRecordDto: UpdateMedicalRecordDto,
+    updateMedicalRecordDto: UpdateMedicalRecordDto
   ): Promise<MedicalRecord> {
     const [affectedCount] = await this.medicalRecordModel.update(
       updateMedicalRecordDto,
       {
         where: { id },
         returning: true,
-      },
+      }
     );
 
     if (affectedCount === 0) {

@@ -16,6 +16,7 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 import { AdminGuard } from 'src/common/guards/admin.guard';
 import { SelfOrStaffGuard } from 'src/common/guards/Self.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { DoctorsGuard } from 'src/common/guards/doctors.guard';
 
 @Controller("patient")
 export class PatientController { 
@@ -26,7 +27,7 @@ export class PatientController {
   create(@Body() createPatientDto: CreatePatientDto,@UploadedFile() avatar:any) {
     return this.patientService.create(createPatientDto,avatar);
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(DoctorsGuard)
   @Get()
   findAll() {
     return this.patientService.findAll();
@@ -41,14 +42,14 @@ export class PatientController {
   @Get("spe/3")
   findByTime(@Body() body: { startTime: Date; finishTime: Date }) {
     const { startTime, finishTime } = body;
-    return this.patientService.getPatientsWithinTimeRange(startTime, finishTime);}
+    return this.patientService.findtime(startTime, finishTime);}
   @UseGuards(SelfOrStaffGuard)
   @Patch(":id")
   update(@Param("id") id: string, @Body() updatePatientDto: UpdatePatientDto) {
     return this.patientService.update(+id, updatePatientDto);
   }
 
-  @UseGuards(SelfOrStaffGuard)
+  @UseGuards(AdminGuard)
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.patientService.remove(+id);

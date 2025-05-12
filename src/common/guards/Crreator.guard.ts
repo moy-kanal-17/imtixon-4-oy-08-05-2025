@@ -17,17 +17,17 @@ export class CreatorGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     
-    const token = request.cookies["refresh_token"];
+    const token = request.cookies["access_token"];
     
     if (!token) {
-        throw new UnauthorizedException("Refresh token topilmadi");
+        throw new UnauthorizedException("access token topilmadi");
     }
     
     let payload;
     let user;
     try {
         payload = this.jwtService.verify(token, {
-          secret: process.env.JWT_REFRESH_SECRET || "super-refresh-secret",
+          secret: process.env.JWT_ACCESS_SECRET || "super-refresh-secret",
         });
     } catch (error) {
         console.log(error);

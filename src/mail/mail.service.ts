@@ -14,8 +14,9 @@ export class MailService {
   async sendActivationLink({ email, token ,name}: { email: string; token: string;name:string }) {
     const activationLink = `http://localhost:3001/auth/activate/${token}`;
     // console.log(process.env);
+    if(!email){console.log("EMAIL YOQ!")}
+    console.log(email,"🔥🔥 ");
     
-
     const subject = "🔐 Hisobingizni faollashtirish havolasi";
 
     const text = `

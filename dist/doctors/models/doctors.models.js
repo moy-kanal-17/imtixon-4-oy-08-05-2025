@@ -25,18 +25,18 @@ __decorate([
 ], Doctor.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "first_name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "last_name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
     (0, sequelize_typescript_1.ForeignKey)(() => specialization_models_1.Specialization),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", Number)
 ], Doctor.prototype, "specialization_id", void 0);
 __decorate([
@@ -53,12 +53,12 @@ __decorate([
 ], Doctor.prototype, "hashed_token", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "phone_number", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", Date)
 ], Doctor.prototype, "birthday", void 0);
 __decorate([
@@ -68,17 +68,17 @@ __decorate([
 ], Doctor.prototype, "active_link", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "gender", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Doctor.prototype, "password", void 0);
 __decorate([

@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LabTestsModule = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const lab_test_entity_1 = require("./entities/lab_test.entity");
+const lab_test_entity_1 = require("./models/lab_test.entity");
 const lab_test_controller_1 = require("./lab_test.controller");
 const lab_test_service_1 = require("./lab_test.service");
 let LabTestsModule = class LabTestsModule {

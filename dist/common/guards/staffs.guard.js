@@ -19,14 +19,14 @@ let StaffGuard = class StaffGuard {
     }
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const token = request.cookies["refresh_token"];
+        const token = request.cookies["access_token"];
         if (!token) {
-            throw new common_1.UnauthorizedException("Refresh token topilmadi");
+            throw new common_1.UnauthorizedException("ACCESS token topilmadi");
         }
         let payload;
         try {
             payload = this.jwtService.verify(token, {
-                secret: process.env.JWT_REFRESH_SECRET || "super-refresh-secret",
+                secret: process.env.JWT_ACCESS_SECRET || "super-refresh-secret",
             });
         }
         catch (error) {

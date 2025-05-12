@@ -1,6 +1,6 @@
-import { CreateLabTestDto } from './dto/create-lab_test.dto';
-import { UpdateLabTestDto } from './dto/update-lab_test.dto';
-import { LabTest } from './entities/lab_test.entity';
+import { CreateLabTestDto } from "./dto/create-lab_test.dto";
+import { UpdateLabTestDto } from "./dto/update-lab_test.dto";
+import { LabTest } from "./models/lab_test.entity";
 export declare class LabTestsService {
     private labTestModel;
     constructor(labTestModel: typeof LabTest);

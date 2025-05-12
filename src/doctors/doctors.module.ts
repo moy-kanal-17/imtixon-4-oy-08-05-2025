@@ -4,9 +4,10 @@ import { DoctorsController } from './doctors.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Doctor } from './models/doctors.models';
 import { SelfOrStaffGuard } from 'src/common/guards/Self.guard';
+import { SpecializationsModule } from 'src/specializations/specializations.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Doctor])],
+  imports: [SequelizeModule.forFeature([Doctor]),SpecializationsModule],
   controllers: [DoctorsController],
   providers: [DoctorsService],
 })

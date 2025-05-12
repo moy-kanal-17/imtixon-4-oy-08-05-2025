@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { CreateLabTestDto } from './dto/create-lab_test.dto';
-import { UpdateLabTestDto } from './dto/update-lab_test.dto';
-import { Patient } from 'src/patient/models/patient.models';
-import { LabTest } from './entities/lab_test.entity';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { CreateLabTestDto } from "./dto/create-lab_test.dto";
+import { UpdateLabTestDto } from "./dto/update-lab_test.dto";
+import { Patient } from "src/patient/models/patient.models";
+import { LabTest } from "./models/lab_test.entity";
 
 @Injectable()
 export class LabTestsService {
   constructor(
     @InjectModel(LabTest)
-    private labTestModel: typeof LabTest,
+    private labTestModel: typeof LabTest
   ) {}
 
   async create(createLabTestDto: CreateLabTestDto): Promise<LabTest> {
@@ -21,8 +21,8 @@ export class LabTestsService {
       include: [
         {
           model: Patient,
-          as: 'patient',
-          attributes: ['first_name', 'last_name'],
+          as: "patient",
+          attributes: ["first_name", "last_name"],
         },
       ],
     });
@@ -30,7 +30,7 @@ export class LabTestsService {
 
   async findOne(id: number): Promise<LabTest> {
     const labTest = await this.labTestModel.findByPk(id, {
-      include: [{ model: Patient, as: 'patient' }],
+      include: [{ model: Patient, as: "patient" }],
     });
     if (!labTest) {
       throw new NotFoundException(`Lab test with ID ${id} not found`);
@@ -38,21 +38,21 @@ export class LabTestsService {
     return labTest;
   }
 
-    async findByspec(rolesid: number): Promise<LabTest[]> {
-      return this.labTestModel.findAll({
-        include: [
-          {
-            model: Patient,
-            as: "patient",
-            where: { id: rolesid },
-          },
-        ],
-      });
-    }
+  async findByspec(rolesid: number): Promise<LabTest[]> {
+    return this.labTestModel.findAll({
+      include: [
+        {
+          model: Patient,
+          as: "patient",
+          where: { id: rolesid },
+        },
+      ],
+    });
+  }
 
   async update(
     id: number,
-    updateLabTestDto: UpdateLabTestDto,
+    updateLabTestDto: UpdateLabTestDto
   ): Promise<LabTest> {
     const [affectedCount] = await this.labTestModel.update(updateLabTestDto, {
       where: { id },

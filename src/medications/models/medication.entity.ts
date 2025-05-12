@@ -6,9 +6,9 @@ import {
   AutoIncrement,
   HasMany,
   DataType,
-} from 'sequelize-typescript';
-import { ApiProperty } from '@nestjs/swagger';
-import { Prescription } from 'src/prescription/entities/prescription.entity';
+} from "sequelize-typescript";
+import { ApiProperty } from "@nestjs/swagger";
+import { Prescription } from "src/prescription/models/prescription.entity";
 
 @Table
 export class Medication extends Model {
@@ -31,8 +31,8 @@ export class Medication extends Model {
   price: number;
 
   @HasMany(() => Prescription, {
-    foreignKey: 'medications_id',
-    as: 'prescriptions',
+    foreignKey: "medications_id",
+    as: "prescriptions",
   })
   prescriptions: Prescription[];
 }

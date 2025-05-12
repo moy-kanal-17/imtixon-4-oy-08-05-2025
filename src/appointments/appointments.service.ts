@@ -10,23 +10,23 @@ import { Doctor } from '../doctors/models/doctors.models';
 export class AppointmentsService {
   constructor(
     @InjectModel(Appointment)
-    private appointmentModel: typeof Appointment,
+    private appointmentModel: typeof Appointment
   ) {}
 
   async create(
-    createAppointmentDto: CreateAppointmentDto,
+    createAppointmentDto: CreateAppointmentDto
   ): Promise<Appointment> {
-    console.log('YARATILDI APPOINTMENT!');
+    console.log("YARATILDI APPOINTMENT!");
     return this.appointmentModel.create(
-      createAppointmentDto as Partial<Appointment>,
+      createAppointmentDto as Partial<Appointment>
     );
   }
 
   async findAll(): Promise<Appointment[]> {
     return this.appointmentModel.findAll({
       include: [
-        { model: Patient, as: 'patient' },
-        { model: Doctor, as: 'doctor' },
+        { model: Patient, as: "patient" },
+        { model: Doctor, as: "doctor" },
       ],
     });
   }
@@ -34,8 +34,8 @@ export class AppointmentsService {
   async findOne(id: number): Promise<Appointment> {
     const appointment = await this.appointmentModel.findByPk(id, {
       include: [
-        { model: Patient, as: 'patient' },
-        { model: Doctor, as: 'doctor' },
+        { model: Patient, as: "patient" },
+        { model: Doctor, as: "doctor" },
       ],
     });
     if (!appointment) {
@@ -44,16 +44,25 @@ export class AppointmentsService {
     return appointment;
   }
 
+  async findPati(doctorId: number): Promise<Appointment[]> {
+    return this.appointmentModel.findAll({
+      where: {doctor_id: doctorId },
+      include: [
+        { model: Patient, as: "patient" }
+      ],
+    });
+  }
+
   async update(
     id: number,
-    updateAppointmentDto: UpdateAppointmentDto,
+    updateAppointmentDto: UpdateAppointmentDto
   ): Promise<Appointment> {
     const [affectedCount] = await this.appointmentModel.update(
       updateAppointmentDto,
       {
         where: { id },
         returning: true,
-      },
+      }
     );
 
     if (affectedCount === 0) {

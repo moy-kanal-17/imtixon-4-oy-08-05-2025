@@ -24,28 +24,36 @@ let AppointmentsService = class AppointmentsService {
         this.appointmentModel = appointmentModel;
     }
     async create(createAppointmentDto) {
-        console.log('YARATILDI APPOINTMENT!');
+        console.log("YARATILDI APPOINTMENT!");
         return this.appointmentModel.create(createAppointmentDto);
     }
     async findAll() {
         return this.appointmentModel.findAll({
             include: [
-                { model: patient_models_1.Patient, as: 'patient' },
-                { model: doctors_models_1.Doctor, as: 'doctor' },
+                { model: patient_models_1.Patient, as: "patient" },
+                { model: doctors_models_1.Doctor, as: "doctor" },
             ],
         });
     }
     async findOne(id) {
         const appointment = await this.appointmentModel.findByPk(id, {
             include: [
-                { model: patient_models_1.Patient, as: 'patient' },
-                { model: doctors_models_1.Doctor, as: 'doctor' },
+                { model: patient_models_1.Patient, as: "patient" },
+                { model: doctors_models_1.Doctor, as: "doctor" },
             ],
         });
         if (!appointment) {
             throw new common_1.NotFoundException(`Appointment with ID ${id} not found`);
         }
         return appointment;
+    }
+    async findPati(doctorId) {
+        return this.appointmentModel.findAll({
+            where: { doctor_id: doctorId },
+            include: [
+                { model: patient_models_1.Patient, as: "patient" }
+            ],
+        });
     }
     async update(id, updateAppointmentDto) {
         const [affectedCount] = await this.appointmentModel.update(updateAppointmentDto, {

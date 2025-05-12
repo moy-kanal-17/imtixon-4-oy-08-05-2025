@@ -33,6 +33,9 @@ let AppointmentsController = class AppointmentsController {
     findOne(id) {
         return this.appointmentsService.findOne(+id);
     }
+    findPatient(id) {
+        return this.appointmentsService.findPati(+id);
+    }
     update(id, updateAppointmentDto) {
         return this.appointmentsService.update(+id, updateAppointmentDto);
     }
@@ -63,6 +66,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AppointmentsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(Self_guard_1.SelfOrStaffGuard),
+    (0, common_1.Get)("patients/:id"),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AppointmentsController.prototype, "findPatient", null);
 __decorate([
     (0, common_1.UseGuards)(Self_guard_1.SelfOrStaffGuard),
     (0, common_1.Patch)(":id"),

@@ -52,12 +52,12 @@ __decorate([
 ], Patient.prototype, "password", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, sequelize_typescript_1.Column)({ allowNull: false, type: sequelize_typescript_1.DataType.STRING }),
+    (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
 ], Patient.prototype, "avatar", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false, type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
 ], Patient.prototype, "gender", void 0);
 __decorate([
@@ -82,7 +82,7 @@ __decorate([
 ], Patient.prototype, "is_active", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
 ], Patient.prototype, "active_link", void 0);
 __decorate([

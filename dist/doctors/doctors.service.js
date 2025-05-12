@@ -17,12 +17,27 @@ const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const doctors_models_1 = require("./models/doctors.models");
 const specialization_models_1 = require("../specializations/models/specialization.models");
+const sequelize_2 = require("sequelize");
+const bcrypt = require("bcrypt");
 let DoctorsService = class DoctorsService {
     doctorModel;
-    constructor(doctorModel) {
+    specializationModel;
+    constructor(doctorModel, specializationModel) {
         this.doctorModel = doctorModel;
+        this.specializationModel = specializationModel;
     }
     async create(createDoctorDto) {
+        const doctor = await this.doctorModel.findOne({ where: { email: createDoctorDto.email } });
+        if (doctor) {
+            console.log(doctor);
+            throw new common_1.NotFoundException("Doctor bor bunaqa");
+        }
+        const specialization = await this.specializationModel.findByPk(createDoctorDto.specialization_id);
+        if (!specialization) {
+            throw new common_1.NotFoundException("Specialization not found");
+        }
+        const hashedPassword = await bcrypt.hash(createDoctorDto.password, 10);
+        createDoctorDto.password = hashedPassword;
         return this.doctorModel.create(createDoctorDto);
     }
     async findAll() {
@@ -45,6 +60,23 @@ let DoctorsService = class DoctorsService {
                 },
             ],
         });
+    }
+    async findtime(startTime, finishTime) {
+        try {
+            const patients = await this.doctorModel.findAll({
+                where: {
+                    createdAt: {
+                        [sequelize_2.Op.between]: [new Date(startTime), new Date(finishTime)],
+                    },
+                    is_active: true,
+                }
+            });
+            return patients;
+        }
+        catch (error) {
+            console.error("Bemorlarni vaqt oralig'ida olishda xatolik:", error);
+            throw new Error("Bemorlarni olishda xatolik yuz berdi");
+        }
     }
     async findOne(id) {
         const doctor = await this.doctorModel.findByPk(id, {
@@ -80,6 +112,7 @@ exports.DoctorsService = DoctorsService;
 exports.DoctorsService = DoctorsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(doctors_models_1.Doctor)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, sequelize_1.InjectModel)(specialization_models_1.Specialization)),
+    __metadata("design:paramtypes", [Object, Object])
 ], DoctorsService);
 //# sourceMappingURL=doctors.service.js.map

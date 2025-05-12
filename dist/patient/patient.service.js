@@ -41,7 +41,7 @@ let PatientService = class PatientService {
         createPatientDto.password = hashedPassword;
         return this.patientModel.create({ ...createPatientDto, avatar: fileName });
     }
-    async getPatientsWithinTimeRange(startTime, finishTime) {
+    async findtime(startTime, finishTime) {
         try {
             const patients = await this.patientModel.findAll({
                 where: {

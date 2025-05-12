@@ -31,7 +31,6 @@ export class CreateDoctorDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsDate()
   @IsNotEmpty()
   birthday?: Date;
 

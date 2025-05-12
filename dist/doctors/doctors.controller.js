@@ -42,6 +42,10 @@ let DoctorsController = class DoctorsController {
     async findbyspec(id) {
         return this.doctorsService.findByspec(+id);
     }
+    findByTime(body) {
+        const { startTime, finishTime } = body;
+        return this.doctorsService.findtime(startTime, finishTime);
+    }
     async remove(id) {
         await this.doctorsService.remove(+id);
         return;
@@ -103,6 +107,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DoctorsController.prototype, "findbyspec", null);
+__decorate([
+    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.Get)("spec/3"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], DoctorsController.prototype, "findByTime", null);
 __decorate([
     (0, common_1.UseGuards)(Self_guard_1.SelfOrStaffGuard),
     (0, swagger_1.ApiOkResponse)({ description: "Doctor deleted successfully." }),

@@ -22,7 +22,7 @@ export class Role extends Model {
   name: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   descriptions: string;
 
   @HasMany(() => Staff, { foreignKey: 'roles_id', as: 'staffs' })

@@ -34,6 +34,11 @@ export class AppointmentsController {
   findOne(@Param("id") id: string) {
     return this.appointmentsService.findOne(+id);
   }
+  @UseGuards(SelfOrStaffGuard)
+  @Get("patients/:id")
+  findPatient(@Param("id") id: string) {
+    return this.appointmentsService.findPati(+id);
+  }
 
   @UseGuards(SelfOrStaffGuard)
   @Patch(":id")

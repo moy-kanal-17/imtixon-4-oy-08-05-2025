@@ -9,10 +9,10 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
-} from '@nestjs/common';
-import { PrescriptionsService } from './prescription.service';
-import { CreatePrescriptionDto } from './dto/create-prescription.dto';
-import { UpdatePrescriptionDto } from './dto/update-prescription.dto';
+} from "@nestjs/common";
+import { PrescriptionsService } from "./prescription.service";
+import { CreatePrescriptionDto } from "./dto/create-prescription.dto";
+import { UpdatePrescriptionDto } from "./dto/update-prescription.dto";
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -20,9 +20,9 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiParam,
-} from '@nestjs/swagger';
-import { Prescription } from './entities/prescription.entity';
-import { DoctorsGuard } from 'src/common/guards/doctors.guard';
+} from "@nestjs/swagger";
+import { Prescription } from "./models/prescription.entity";
+import { DoctorsGuard } from "src/common/guards/doctors.guard";
 
 @ApiTags("Prescriptions")
 @Controller("prescriptions")

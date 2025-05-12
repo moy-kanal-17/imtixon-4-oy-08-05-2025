@@ -9,10 +9,10 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
-} from '@nestjs/common';
-import { MedicalRecordsService } from './medical-records.service';
-import { CreateMedicalRecordDto } from './dto/create-medical-record.dto';
-import { UpdateMedicalRecordDto } from './dto/update-medical-record.dto';
+} from "@nestjs/common";
+import { MedicalRecordsService } from "./medical-records.service";
+import { CreateMedicalRecordDto } from "./dto/create-medical-record.dto";
+import { UpdateMedicalRecordDto } from "./dto/update-medical-record.dto";
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -20,10 +20,10 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiParam,
-} from '@nestjs/swagger';
-import { MedicalRecord } from './entities/medical-record.entity';
-import { DoctorsGuard } from 'src/common/guards/doctors.guard';
-import { SelfOrStaffGuard } from 'src/common/guards/Self.guard';
+} from "@nestjs/swagger";
+import { MedicalRecord } from "./models/medical-record.entity";
+import { DoctorsGuard } from "src/common/guards/doctors.guard";
+import { SelfOrStaffGuard } from "src/common/guards/Self.guard";
 
 @ApiTags("Medical Records")
 @Controller("medical-records")

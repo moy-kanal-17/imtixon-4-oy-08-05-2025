@@ -12,12 +12,13 @@ const doctors_service_1 = require("./doctors.service");
 const doctors_controller_1 = require("./doctors.controller");
 const sequelize_1 = require("@nestjs/sequelize");
 const doctors_models_1 = require("./models/doctors.models");
+const specializations_module_1 = require("../specializations/specializations.module");
 let DoctorsModule = class DoctorsModule {
 };
 exports.DoctorsModule = DoctorsModule;
 exports.DoctorsModule = DoctorsModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([doctors_models_1.Doctor])],
+        imports: [sequelize_1.SequelizeModule.forFeature([doctors_models_1.Doctor]), specializations_module_1.SpecializationsModule],
         controllers: [doctors_controller_1.DoctorsController],
         providers: [doctors_service_1.DoctorsService],
     })

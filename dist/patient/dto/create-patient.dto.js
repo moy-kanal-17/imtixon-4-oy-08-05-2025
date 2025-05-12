@@ -13,8 +13,6 @@ exports.CreatePatientDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 class CreatePatientDto {
-    first_name;
-    last_name;
     gender;
     phone_number;
     birthday;
@@ -35,9 +33,8 @@ __decorate([
     __metadata("design:type", String)
 ], CreatePatientDto.prototype, "last_name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ example: "email patient", description: "patientni emaili" }),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], CreatePatientDto.prototype, "email", void 0);
 __decorate([

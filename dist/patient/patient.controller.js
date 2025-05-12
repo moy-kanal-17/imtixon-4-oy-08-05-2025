@@ -20,6 +20,7 @@ const update_patient_dto_1 = require("./dto/update-patient.dto");
 const admin_guard_1 = require("../common/guards/admin.guard");
 const Self_guard_1 = require("../common/guards/Self.guard");
 const platform_express_1 = require("@nestjs/platform-express");
+const doctors_guard_1 = require("../common/guards/doctors.guard");
 let PatientController = class PatientController {
     patientService;
     constructor(patientService) {
@@ -36,7 +37,7 @@ let PatientController = class PatientController {
     }
     findByTime(body) {
         const { startTime, finishTime } = body;
-        return this.patientService.getPatientsWithinTimeRange(startTime, finishTime);
+        return this.patientService.findtime(startTime, finishTime);
     }
     update(id, updatePatientDto) {
         return this.patientService.update(+id, updatePatientDto);
@@ -56,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PatientController.prototype, "create", null);
 __decorate([
-    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
+    (0, common_1.UseGuards)(doctors_guard_1.DoctorsGuard),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -88,7 +89,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PatientController.prototype, "update", null);
 __decorate([
-    (0, common_1.UseGuards)(Self_guard_1.SelfOrStaffGuard),
+    (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
     (0, common_1.Delete)(":id"),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),

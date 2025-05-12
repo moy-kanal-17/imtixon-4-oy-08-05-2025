@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicationsService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const medication_entity_1 = require("./entities/medication.entity");
-const prescription_entity_1 = require("../prescription/entities/prescription.entity");
+const medication_entity_1 = require("./models/medication.entity");
+const prescription_entity_1 = require("../prescription/models/prescription.entity");
 let MedicationsService = class MedicationsService {
     medicationModel;
     constructor(medicationModel) {
@@ -30,7 +30,7 @@ let MedicationsService = class MedicationsService {
     }
     async findOne(id) {
         const medication = await this.medicationModel.findByPk(id, {
-            include: [{ model: prescription_entity_1.Prescription, as: 'prescriptions' }],
+            include: [{ model: prescription_entity_1.Prescription, as: "prescriptions" }],
         });
         if (!medication) {
             throw new common_1.NotFoundException(`Medication with ID ${id} not found`);

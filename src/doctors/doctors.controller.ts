@@ -79,6 +79,13 @@ export class DoctorsController {
     return this.doctorsService.findByspec(+id);
   }
 
+  @UseGuards(AdminGuard)
+  @Get("spec/3")
+  findByTime(@Body() body: { startTime: Date; finishTime: Date }) {
+    const { startTime, finishTime } = body;
+    return this.doctorsService.findtime(startTime, finishTime);
+  }
+
   @UseGuards(SelfOrStaffGuard)
   @ApiOkResponse({ description: "Doctor deleted successfully." })
   @ApiNotFoundResponse({ description: "Doctor not found." })

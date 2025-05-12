@@ -1,14 +1,13 @@
-import { Module } from '@nestjs/common';
-import { SpecializationsService } from './specializations.service';
-import { SpecializationsController } from './specializations.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { Specialization } from './models/specialization.models';
-import { SelfOrStaffGuard } from 'src/common/guards/Self.guard';
-import { StaffsModule } from 'src/staffs/staffs.module';
+import { Module } from "@nestjs/common";
+import { SequelizeModule } from "@nestjs/sequelize";
+import { Specialization } from "./models/specialization.models"; 
+import { SpecializationsService } from "./specializations.service";
+import { SpecializationsController } from "./specializations.controller";
 
 @Module({
-  imports: [SequelizeModule.forFeature([Specialization]),StaffsModule],
+  imports: [SequelizeModule.forFeature([Specialization])],
   controllers: [SpecializationsController],
-  providers: [SpecializationsService,SelfOrStaffGuard],
+  providers: [SpecializationsService],
+  exports: [SequelizeModule, SpecializationsService], 
 })
 export class SpecializationsModule {}

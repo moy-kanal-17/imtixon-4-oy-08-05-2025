@@ -3,21 +3,21 @@ import {
   UnauthorizedException,
   BadRequestException,
   NotFoundException,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import { Doctor } from 'src/doctors/models/doctors.models';
-import { Staff } from 'src/staffs/models/staff.model';
-import { Patient } from 'src/patient/models/patient.models';
-import { CreatePatientDto } from 'src/patient/dto/create-patient.dto';
-import { CreateDoctorDto } from '../doctors/dto/create-doctor.dto';
-import { CreateStaffDto } from '../staffs/dto/create-staff.dto';
-import { LoginAuthDto } from './dto/login-auth.dto';
-import { Response } from 'express';
-import { error } from 'console';
-import { MailService } from 'src/mail/mail.service';
-import { randomUUID } from 'crypto';
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
+import { Doctor } from "src/doctors/models/doctors.models";
+import { Staff } from "src/staffs/models/staff.model";
+import { Patient } from "src/patient/models/patient.models";
+import { CreatePatientDto } from "src/patient/dto/create-patient.dto";
+import { CreateDoctorDto } from "../doctors/dto/create-doctor.dto";
+import { CreateStaffDto } from "../staffs/dto/create-staff.dto";
+import { LoginAuthDto } from "./dto/login-auth.dto";
+import { Response } from "express";
+import { error } from "console";
+import { MailService } from "src/mail/mail.service";
+import { randomUUID } from "crypto";
 
 @Injectable()
 export class AuthService {
@@ -29,52 +29,25 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register(
-    registerDto: CreatePatientDto | CreateDoctorDto | CreateStaffDto,
-    role: string
-  ): Promise<Patient | Doctor | Staff | null> {
+  async register(registerDto: CreatePatientDto, role: string) {
     const { email, password, ...rest } = registerDto as any;
     let user;
+    console.log(registerDto);
 
     if (role === "patient") {
-      user = await this.patientModel.findOne({ where: { email } });
-    } else if (role === "doctor") {
-      user = await this.doctorModel.findOne({ where: { email } });
-    } else if (role === "staff" || role === "admin" || role === "creator") {
-      user = await this.staffModel.findOne({ where: { email } });
-    } else {
-      throw new BadRequestException("Noto'g'ri rol kiritildi");
-    }
+      const existing = await this.patientModel.findOne({ where: { email } });
+      if (existing) {
+        throw new BadRequestException("Bu email allaqachon ro'yxatdan o'tgan");
+      }
 
-    if (user) {
-      throw new BadRequestException("Bu email allaqachon ro'yxatdan o'tgan");
-    }
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    if (role === "patient") {
       const token = randomUUID();
-      await user.update({ active_link: token });
-      await this.mailService.sendActivationLink({
-        email: user.email,
-        token,
-        name: user.full_name || "foydalanuvchi",
-      });
-      
-
-      return this.patientModel.create({
-        email,
-        password: hashedPassword,
+      const newUser = await this.patientModel.create({
         ...rest,
-      });
-    } else if (role === "doctor") {
-      const token = randomUUID();
-
-      const newUser = await this.doctorModel.create({
         email,
         password: hashedPassword,
         active_link: token,
-        ...rest,
       });
 
       await this.mailService.sendActivationLink({
@@ -82,30 +55,9 @@ export class AuthService {
         token,
         name: newUser.first_name || "foydalanuvchi",
       });
-      
 
       return newUser;
-    } else if (role === "staff" || role === "admin") {
-      // if (user.IsCreator==null || user.IsCreator ===false) {
-      //   console.log("UZUR lekin siz qosholmisiz!");
-      //   throw new UnauthorizedException("UZUR lekin siz qosholmisiz!");
-      // }
-
-      return this.staffModel.create({
-        email,
-        password: hashedPassword,
-        ...rest,
-        roles_id: (registerDto as CreateStaffDto).roles_id,
-      });
-    } else if (role === "creator") {
-      return this.staffModel.create({
-        email,
-        password: hashedPassword,
-        ...rest,
-        roles_id: (registerDto as CreateStaffDto).roles_id,
-      });
     }
-    return null;
   }
 
   async login(
@@ -117,12 +69,22 @@ export class AuthService {
     let user;
 
     if (role == "patient") {
+      
       user = await this.patientModel.findOne({ where: { email } });
       if (!user.is_active) {
+        const token = randomUUID();
         console.log("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
+        user.update({ active_link: token });
+        await this.mailService.sendActivationLink({
+          email: user.email,
+          token: token,
+          name: user.first_name || "foydalanuvchi",
+        });
         throw new NotFoundException("SIZ ACTIVE QILMAGANSIZ ACAUNTNI!");
       }
+
     } else if (role == "doctor") {
+      
       user = await this.doctorModel.findOne({ where: { email } });
     } else if (role == "staff" || role == "admin" || role == "creator") {
       console.log(email, password);
@@ -169,17 +131,6 @@ export class AuthService {
 
     const hashedToken = await bcrypt.hash(refresh_token, 10);
     await user.update({ hashed_token: hashedToken });
-
-    console.log(`${user.email} 💀💀`);
-
-    const token = randomUUID();
-    await user.update({ active_link: token });
-    await this.mailService.sendActivationLink({
-      email: user.email,
-      token,
-      name: user.full_name || "foydalanuvchi",
-    });
-    
 
     return { access_token };
   }
@@ -239,7 +190,7 @@ export class AuthService {
         payload.role === "admin" ||
         payload.role === "creator"
       ) {
-        console.log("creator 🥰👨‍💻👨‍💻");
+
 
         user = await this.staffModel.findByPk(payload.sub);
       }

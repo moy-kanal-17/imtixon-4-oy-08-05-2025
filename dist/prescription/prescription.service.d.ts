@@ -1,6 +1,6 @@
-import { Prescription } from './entities/prescription.entity';
-import { CreatePrescriptionDto } from './dto/create-prescription.dto';
-import { UpdatePrescriptionDto } from './dto/update-prescription.dto';
+import { Prescription } from "./models/prescription.entity";
+import { CreatePrescriptionDto } from "./dto/create-prescription.dto";
+import { UpdatePrescriptionDto } from "./dto/update-prescription.dto";
 export declare class PrescriptionsService {
     private prescriptionModel;
     constructor(prescriptionModel: typeof Prescription);

@@ -5,6 +5,7 @@ import {
   PrimaryKey,
   AutoIncrement,
   HasMany,
+  DataType,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { Doctor } from '../../doctors/models/doctors.models';
@@ -18,13 +19,13 @@ export class Specialization extends Model {
   declare id: number;
 
   @ApiProperty()
-  @Column
+  @Column({ allowNull: false })
   name: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   descriptions: string;
 
-  @HasMany(() => Doctor, { foreignKey: 'specialization_id', as: 'doctors' })
+  @HasMany(() => Doctor, { foreignKey: "specialization_id", as: "doctors" })
   doctors: Doctor[];
 }

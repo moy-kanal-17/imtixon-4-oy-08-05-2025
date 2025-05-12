@@ -8,20 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SpecializationsModule = void 0;
 const common_1 = require("@nestjs/common");
-const specializations_service_1 = require("./specializations.service");
-const specializations_controller_1 = require("./specializations.controller");
 const sequelize_1 = require("@nestjs/sequelize");
 const specialization_models_1 = require("./models/specialization.models");
-const Self_guard_1 = require("../common/guards/Self.guard");
-const staffs_module_1 = require("../staffs/staffs.module");
+const specializations_service_1 = require("./specializations.service");
+const specializations_controller_1 = require("./specializations.controller");
 let SpecializationsModule = class SpecializationsModule {
 };
 exports.SpecializationsModule = SpecializationsModule;
 exports.SpecializationsModule = SpecializationsModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([specialization_models_1.Specialization]), staffs_module_1.StaffsModule],
+        imports: [sequelize_1.SequelizeModule.forFeature([specialization_models_1.Specialization])],
         controllers: [specializations_controller_1.SpecializationsController],
-        providers: [specializations_service_1.SpecializationsService, Self_guard_1.SelfOrStaffGuard],
+        providers: [specializations_service_1.SpecializationsService],
+        exports: [sequelize_1.SequelizeModule, specializations_service_1.SpecializationsService],
     })
 ], SpecializationsModule);
 //# sourceMappingURL=specializations.module.js.map

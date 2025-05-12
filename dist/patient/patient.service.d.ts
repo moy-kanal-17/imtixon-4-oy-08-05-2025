@@ -7,7 +7,7 @@ export declare class PatientService {
     private fileservice;
     constructor(patientModel: typeof Patient, fileservice: FileService);
     create(createPatientDto: CreatePatientDto, avatar: any): Promise<Patient>;
-    getPatientsWithinTimeRange(startTime: Date, finishTime: Date): Promise<Patient[]>;
+    findtime(startTime: Date, finishTime: Date): Promise<Patient[]>;
     findAll(): Promise<Patient[]>;
     findOne(id: number): Promise<Patient>;
     update(id: number, updatePatientDto: UpdatePatientDto): Promise<Patient>;

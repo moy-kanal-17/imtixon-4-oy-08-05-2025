@@ -45,7 +45,7 @@ export class Staff extends Model {
 
   @ApiProperty()
   @Column({ allowNull: true, type: DataType.STRING })
-  activation_token: string;
+  active_link: string;
 
   @ApiProperty()
   @Column({ allowNull: false, type: DataType.BOOLEAN, defaultValue:false})

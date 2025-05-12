@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PrescriptionsService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const prescription_entity_1 = require("./entities/prescription.entity");
-const medical_record_entity_1 = require("../medical-records/entities/medical-record.entity");
-const medication_entity_1 = require("../medications/entities/medication.entity");
+const prescription_entity_1 = require("./models/prescription.entity");
+const medical_record_entity_1 = require("../medical-records/models/medical-record.entity");
+const medication_entity_1 = require("../medications/models/medication.entity");
 let PrescriptionsService = class PrescriptionsService {
     prescriptionModel;
     constructor(prescriptionModel) {
@@ -30,21 +30,21 @@ let PrescriptionsService = class PrescriptionsService {
         try {
             return this.prescriptionModel.findAll({
                 include: [
-                    { model: medical_record_entity_1.MedicalRecord, as: 'medicalRecord', attributes: ['name'] },
-                    { model: medication_entity_1.Medication, as: 'medication', attributes: ['name'] },
+                    { model: medical_record_entity_1.MedicalRecord, as: "medicalRecord", attributes: ["name"] },
+                    { model: medication_entity_1.Medication, as: "medication", attributes: ["name"] },
                 ],
             });
         }
         catch (error) {
-            console.error('Error fetching prescriptions:', error);
+            console.error("Error fetching prescriptions:", error);
             return [];
         }
     }
     async findOne(id) {
         const prescription = await this.prescriptionModel.findByPk(id, {
             include: [
-                { model: medical_record_entity_1.MedicalRecord, as: 'medicalRecord' },
-                { model: medication_entity_1.Medication, as: 'medication' },
+                { model: medical_record_entity_1.MedicalRecord, as: "medicalRecord" },
+                { model: medication_entity_1.Medication, as: "medication" },
             ],
         });
         if (!prescription) {

@@ -8,7 +8,7 @@ export declare class Staff extends Model {
     password: string;
     phone_number: string;
     hashed_token: string;
-    activation_token: string;
+    active_link: string;
     IsCreator?: boolean;
     roles_id: number;
     role: Role;

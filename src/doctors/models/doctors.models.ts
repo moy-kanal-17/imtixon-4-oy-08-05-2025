@@ -19,16 +19,16 @@ export class Doctor extends Model {
   declare id: number;
 
   @ApiProperty()
-  @Column
+  @Column({ allowNull: false })
   declare first_name: string;
 
   @ApiProperty()
-  @Column
+  @Column({ allowNull: false })
   declare last_name: string;
 
   @ApiProperty({ required: false })
   @ForeignKey(() => Specialization)
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   declare specialization_id: number;
 
   @BelongsTo(() => Specialization, {
@@ -42,11 +42,11 @@ export class Doctor extends Model {
   declare hashed_token: string;
 
   @ApiProperty()
-  @Column
+  @Column({ allowNull: false })
   declare phone_number: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   declare birthday: Date;
 
   @ApiProperty({ default: true })
@@ -54,15 +54,15 @@ export class Doctor extends Model {
   declare active_link: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   declare gender: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   declare email: string;
 
   @ApiProperty({ required: false })
-  @Column({ allowNull: true })
+  @Column({ allowNull: false })
   declare password: string;
 
   @ApiProperty({ required: false })

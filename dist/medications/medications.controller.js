@@ -18,7 +18,7 @@ const medications_service_1 = require("./medications.service");
 const create_medication_dto_1 = require("./dto/create-medication.dto");
 const update_medication_dto_1 = require("./dto/update-medication.dto");
 const swagger_1 = require("@nestjs/swagger");
-const medication_entity_1 = require("./entities/medication.entity");
+const medication_entity_1 = require("./models/medication.entity");
 const doctors_guard_1 = require("../common/guards/doctors.guard");
 let MedicationsController = class MedicationsController {
     medicationsService;

@@ -18,7 +18,7 @@ let Staff = class Staff extends sequelize_typescript_1.Model {
     last_name;
     phone_number;
     hashed_token;
-    activation_token;
+    active_link;
     IsCreator = false;
     roles_id;
     role;
@@ -65,7 +65,7 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, sequelize_typescript_1.Column)({ allowNull: true, type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
-], Staff.prototype, "activation_token", void 0);
+], Staff.prototype, "active_link", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, sequelize_typescript_1.Column)({ allowNull: false, type: sequelize_typescript_1.DataType.BOOLEAN, defaultValue: false }),

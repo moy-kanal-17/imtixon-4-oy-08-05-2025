@@ -15,19 +15,26 @@ const swagger_1 = require("@nestjs/swagger");
 class LoginAuthDto {
     email;
     password;
+    role;
 }
 exports.LoginAuthDto = LoginAuthDto;
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ required: true, example: "user@example.com" }),
     (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoginAuthDto.prototype, "email", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ required: true, example: "password123" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoginAuthDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ required: true, example: "user" }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], LoginAuthDto.prototype, "role", void 0);
 //# sourceMappingURL=login-auth.dto.js.map

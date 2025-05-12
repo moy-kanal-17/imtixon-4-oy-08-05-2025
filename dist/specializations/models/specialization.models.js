@@ -28,16 +28,16 @@ __decorate([
 ], Specialization.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Specialization.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, sequelize_typescript_1.Column)({ allowNull: true }),
+    (0, sequelize_typescript_1.Column)({ allowNull: false }),
     __metadata("design:type", String)
 ], Specialization.prototype, "descriptions", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => doctors_models_1.Doctor, { foreignKey: 'specialization_id', as: 'doctors' }),
+    (0, sequelize_typescript_1.HasMany)(() => doctors_models_1.Doctor, { foreignKey: "specialization_id", as: "doctors" }),
     __metadata("design:type", Array)
 ], Specialization.prototype, "doctors", void 0);
 exports.Specialization = Specialization = __decorate([
